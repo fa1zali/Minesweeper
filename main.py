@@ -1,6 +1,7 @@
 # Import libraries
 from tkinter import *
 import settings
+import utils
 
 root = Tk()
 # Set the window size
@@ -11,12 +12,12 @@ root.title("Minesweeper")
 root.resizable(False, False)
 
 # Adding a frame at the top
-top_frame = Frame(root, bg = "teal", width = 1440, height = 180)
+top_frame = Frame(root, bg = "teal", width = settings.WIDTH, height = utils.height_prct(25))
 top_frame.place(x = 0, y = 0)
 
 # Adding a frame to the left
-left_frame = Frame(root, bg = "teal", width = 360, height = 540)
-left_frame.place(x = 0, y = 180)
+left_frame = Frame(root, bg = "teal", width = utils.width_prct(25), height = utils.height_prct(75))
+left_frame.place(x = 0, y = utils.height_prct(25))
 
 # Keep the window running
 root.mainloop()
