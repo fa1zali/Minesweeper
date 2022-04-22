@@ -29,9 +29,46 @@ class Cell:
     def left_click_action(self, event):
         if self.is_mine:
             self.show_mine()
+        else:
+            if self.sorrounded_cells_mines_length == 0:
+                for cell_object in self.sorrounded_cells:
+                    cell_object.show_cell()
+            self.show_cell()
     
+    def get_cell_by_axis(self, x, y):
+        # Return a cell object based on x and y
+        for cell in Cell.all:
+            if cell.x == x and cell.y == y:
+                return cell
+
     def show_mine(self):
         self.cell_btn_object.configure(bg = "red")
+
+    @property
+    def sorrounded_cells(self):
+        cells = [
+        self.get_cell_by_axis(self.x-1, self.y-1),
+        self.get_cell_by_axis(self.x-1, self.y),
+        self.get_cell_by_axis(self.x-1, self.y+1),
+        self.get_cell_by_axis(self.x, self.y-1),
+        self.get_cell_by_axis(self.x+1, self.y-1),
+        self.get_cell_by_axis(self.x+1, self.y),
+        self.get_cell_by_axis(self.x+1, self.y+1),
+        self.get_cell_by_axis(self.x, self.y+1)
+        ]
+        cells = [elm for elm in cells if elm is not None]
+        return cells
+
+    @property
+    def sorrounded_cells_mines_length(self):
+        counter = 0
+        for cell in self.sorrounded_cells:
+            if cell.is_mine:
+                counter += 1
+        return counter
+
+    def show_cell(self):
+        self.cell_btn_object.configure(text=self.sorrounded_cells_mines_length)
 
     # right click method
     def right_click_action(self, event):
